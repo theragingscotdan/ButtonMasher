@@ -26,7 +26,21 @@ int main()
 	// create music
 	sf::Music gameMusic;
 	gameMusic.openFromFile("audio/music.ogg");
-	gameMusic.play();
+	//gameMusic.play();
+
+	// create font
+	sf::Font gameFont;
+	gameFont.loadFromFile("fonts/mainFont.ttf");
+	
+	// create Title
+	sf::Text titleText;
+	titleText.setFont(gameFont);
+	titleText.setString("BuTtOn MaShEr");
+	titleText.setPosition(
+		gameWindow.getSize().x / 2 - titleText.getLocalBounds().width /2,
+		30
+	);
+	
 
 	// ----------------------------------------------------------------
 
@@ -58,6 +72,7 @@ int main()
 
 		// draw everything
 		gameWindow.draw(buttonSprite);
+		gameWindow.draw(titleText);
 
 		// display the windows contents on the screen
 		gameWindow.display();

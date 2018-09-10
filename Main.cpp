@@ -1,5 +1,6 @@
 // included libraries
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 
 // entry point for the program
@@ -14,7 +15,18 @@ int main()
 	// create button sprite
 	sf::Texture buttonTexture;
 	buttonTexture.loadFromFile("graphics/button.png");
+	sf::Sprite buttonSprite;
+	buttonSprite.setTexture(buttonTexture);
+	// create sprite at centre the sprite on the screen
+	buttonSprite.setPosition(
+		gameWindow.getSize().x / 2 - buttonTexture.getSize().x / 2, 
+		gameWindow.getSize().y / 2 - buttonTexture.getSize().y / 2
+	);
 
+	// create music
+	sf::Music gameMusic;
+	gameMusic.openFromFile("audio/music.ogg");
+	gameMusic.play();
 
 	// ----------------------------------------------------------------
 
@@ -41,6 +53,14 @@ int main()
 		// TODO: Update game state
 
 		// TODO: Draw Graphics
+
+		gameWindow.clear(sf::Color::Black);
+
+		// draw everything
+		gameWindow.draw(buttonSprite);
+
+		// display the windows contents on the screen
+		gameWindow.display();
 
 	}
 	// exit point for the program

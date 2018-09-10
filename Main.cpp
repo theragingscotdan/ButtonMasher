@@ -5,10 +5,21 @@
 // entry point for the program
 int main()
 {
+	// ------------------ game setup --------------------------------
 	// make a variable called gameWindow of type RenderWindow
 	sf::RenderWindow gameWindow;
 	gameWindow.create(sf::VideoMode::getDesktopMode(), "Button Masher", 
 		sf::Style::Titlebar | sf::Style::Close);
+
+	// create button sprite
+	sf::Texture buttonTexture;
+	buttonTexture.loadFromFile("graphics/button.png");
+
+
+	// ----------------------------------------------------------------
+
+
+
 
 	// game loop
 	while (gameWindow.isOpen())

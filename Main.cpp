@@ -1,6 +1,7 @@
 // included libraries
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <string>
 
 
 // entry point for the program
@@ -33,7 +34,7 @@ int main()
 	gameFont.loadFromFile("fonts/mainFont.ttf");
 	
 	// create Title
-	sf::Text titleText, madeByTest;
+	sf::Text titleText, madeByTest, scoreText;
 	titleText.setFont(gameFont);
 	titleText.setString("BuTtOn MaShEr");
 	titleText.setCharacterSize(100);
@@ -52,7 +53,16 @@ int main()
 		130
 	);
 	
-
+	// score
+	int score = 0;
+	scoreText.setFont(gameFont);
+	scoreText.setString("Score: " + std::to_string(score));
+	scoreText.setCharacterSize(20);
+	scoreText.setFillColor(sf::Color::Yellow);
+	scoreText.setPosition(
+		gameWindow.getSize().x / 2 - scoreText.getLocalBounds().width / 2,
+		1000
+	);
 	// ----------------------------------------------------------------
 
 
@@ -75,7 +85,9 @@ int main()
 		}
 
 
-		// TODO: Update game state
+		// Update game state
+		score = score + 1;
+		scoreText.setString("Score: " + std::to_string(score));
 
 		// TODO: Draw Graphics
 
@@ -85,6 +97,7 @@ int main()
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
 		gameWindow.draw(madeByTest);
+		gameWindow.draw(scoreText);
 
 		// display the windows contents on the screen
 		gameWindow.display();

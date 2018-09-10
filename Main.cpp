@@ -33,12 +33,23 @@ int main()
 	gameFont.loadFromFile("fonts/mainFont.ttf");
 	
 	// create Title
-	sf::Text titleText;
+	sf::Text titleText, madeByTest;
 	titleText.setFont(gameFont);
 	titleText.setString("BuTtOn MaShEr");
+	titleText.setCharacterSize(100);
+	titleText.setFillColor(sf::Color::Yellow);
+	titleText.setStyle(sf::Text::Bold | sf::Text::Italic);
+
 	titleText.setPosition(
 		gameWindow.getSize().x / 2 - titleText.getLocalBounds().width /2,
 		30
+	);
+
+	madeByTest.setFont(gameFont);
+	madeByTest.setString("made by Daniel Wallace");
+	madeByTest.setPosition(
+		gameWindow.getSize().x / 2 - madeByTest.getLocalBounds().width / 2,
+		130
 	);
 	
 
@@ -73,6 +84,7 @@ int main()
 		// draw everything
 		gameWindow.draw(buttonSprite);
 		gameWindow.draw(titleText);
+		gameWindow.draw(madeByTest);
 
 		// display the windows contents on the screen
 		gameWindow.display();

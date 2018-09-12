@@ -81,6 +81,9 @@ int main()
 	clickBuffer.loadFromFile("audio/buttonclick.ogg");
 	sf::Sound clickSound;
 	clickSound.setBuffer(clickBuffer);
+
+	// game state
+	bool playing = false;
 	// ----------------------------------------------------------------
 
 
@@ -100,8 +103,15 @@ int main()
 			{
 				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
 				{
-					score = score + 1;
-					clickSound.play();
+					if (playing == true)
+					{
+						score = score + 1;
+						clickSound.play();
+					}
+					else
+					{
+						playing = true;
+					}
 				}
 			}
 
@@ -117,7 +127,19 @@ int main()
 
 		// timer
 		sf::Time frameTime = gameClock.restart();
-		timeRemaining = timeRemaining - frameTime;
+
+		if (playing == true)
+		{
+			timeRemaining = timeRemaining - frameTime;
+
+			if (timeRemaining.asSeconds() <= 0.0f)
+			{
+				timeRemaining = sf::seconds(0.0f);
+				playing = false;
+			}
+		}
+
+		// update our text displays based on data
 		timerText.setString("Time Remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
 
 		scoreText.setString("Score: " + std::to_string(score));

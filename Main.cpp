@@ -76,6 +76,11 @@ int main()
 	sf::Time timeRemaining = timeLimit;
 	sf::Clock gameClock;
 
+	// click sound effect
+	sf::SoundBuffer clickBuffer;
+	clickBuffer.loadFromFile("audio/buttonclick.ogg");
+	sf::Sound clickSound;
+	clickSound.setBuffer(clickBuffer);
 	// ----------------------------------------------------------------
 
 
@@ -96,6 +101,7 @@ int main()
 				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
 				{
 					score = score + 1;
+					clickSound.play();
 				}
 			}
 
@@ -115,6 +121,8 @@ int main()
 		timerText.setString("Time Remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
 
 		scoreText.setString("Score: " + std::to_string(score));
+
+
 		
 		// TODO: Draw Graphics
 

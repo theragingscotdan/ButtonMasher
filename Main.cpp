@@ -34,7 +34,7 @@ int main()
 	gameFont.loadFromFile("fonts/mainFont.ttf");
 	
 	// create Title
-	sf::Text titleText, madeByTest, scoreText;
+	sf::Text titleText, madeByTest, scoreText, timerText;
 	titleText.setFont(gameFont);
 	titleText.setString("BuTtOn MaShEr");
 	titleText.setCharacterSize(100);
@@ -59,10 +59,23 @@ int main()
 	scoreText.setString("Score: " + std::to_string(score));
 	scoreText.setCharacterSize(20);
 	scoreText.setFillColor(sf::Color::Yellow);
-	scoreText.setPosition(
-		gameWindow.getSize().x / 2 - scoreText.getLocalBounds().width / 2,
-		1000
+	scoreText.setPosition(30,30);
+
+	
+	timerText.setFont(gameFont);
+	timerText.setString("Time Remaining: 0");
+	timerText.setCharacterSize(20);
+	timerText.setFillColor(sf::Color::White);
+	timerText.setPosition(
+		gameWindow.getSize().x - timerText.getLocalBounds().width-30,
+		30
 	);
+
+	 // timer functionality
+	sf::Time timeLimit = sf::seconds(10.0f);
+	sf::Time timeRemaining = timeLimit;
+	sf::Clock gameClock;
+
 	// ----------------------------------------------------------------
 
 
@@ -77,6 +90,15 @@ int main()
 		{
 			// Process events
 
+			//check if the event is the mouse is pressed
+			if (gameEvent.type == sf::Event::MouseButtonPressed)
+			{
+				if (buttonSprite.getGlobalBounds().contains(gameEvent.mouseButton.x, gameEvent.mouseButton.y))
+				{
+					score = score + 1;
+				}
+			}
+
 			//check if the event is the closed event
 			if (gameEvent.type == sf::Event::Closed)
 			{
@@ -86,9 +108,14 @@ int main()
 
 
 		// Update game state
-		score = score + 1;
-		scoreText.setString("Score: " + std::to_string(score));
 
+		// timer
+		sf::Time frameTime = gameClock.restart();
+		timeRemaining = timeRemaining - frameTime;
+		timerText.setString("Time Remaining: " + std::to_string((int)std::ceilf(timeRemaining.asSeconds())));
+
+		scoreText.setString("Score: " + std::to_string(score));
+		
 		// TODO: Draw Graphics
 
 		gameWindow.clear(sf::Color::Black);
@@ -98,6 +125,7 @@ int main()
 		gameWindow.draw(titleText);
 		gameWindow.draw(madeByTest);
 		gameWindow.draw(scoreText);
+		gameWindow.draw(timerText);
 
 		// display the windows contents on the screen
 		gameWindow.display();
